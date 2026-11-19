@@ -1,0 +1,16 @@
+.venv/
+venv/
+.idea/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+.env.*
+!.env.example
+node_modules/
+allure-results/
+allure-report/
+.coverage
+htmlcov/
+*.log
+url.properties
