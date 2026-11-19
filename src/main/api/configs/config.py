@@ -1,0 +1,33 @@
+
+from pathlib import Path
+from typing import Any
+
+
+class Config:
+    _isinstance = None
+    _dictionary = {}
+
+    def __new__(cls):
+        if cls._isinstance is None:
+            cls._isinstance = super(Config, cls).__new__(cls)
+
+            config_path = Path(__file__).parents[4] / 'resources' / 'url.properties'
+
+            print("CONFIG PATH:", repr(str(config_path)))
+            print("FILE EXISTS:", config_path.is_file())
+            print("FILES IN RESOURCES:", list(config_path.parent.iterdir()))
+
+            if not config_path.exists():
+                raise FileNotFoundError(f"Config path not found: {config_path}")
+
+            with open(config_path, "r") as f:
+                for line in f:
+                    if "=" in line:
+                        key, value = line.split("=", 1)
+                        cls._dictionary[key.strip()] = value.strip()
+
+        return cls._isinstance
+
+    @staticmethod
+    def fetch(key: str, default_value: Any = None) -> Any:
+        return Config()._dictionary.get(key, default_value)
