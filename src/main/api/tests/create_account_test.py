@@ -1,8 +1,10 @@
+
 import pytest
 from sqlalchemy.orm import Session
 from src.main.api.classes.api_manager import ApiManager
 from src.main.api.db.crud.account_crud import AccountCrudDB as Account
 from src.main.api.models.create_user_request import CreateUserRequest
+
 
 @pytest.mark.api
 class TestCreateAccount:
@@ -11,12 +13,16 @@ class TestCreateAccount:
         api_manager: ApiManager,
         create_user_request: CreateUserRequest,
         db_session: Session
-    ):
+    ) -> None:
         response = api_manager.user_steps.create_account(create_user_request)
 
-        assert response.balance == 0
+        assert response.balance == 0, (
+            f"Начальный баланс счёта: {response.balance}, ожидался 0"
+        )
 
         account_from_db = Account.get_account_by_id(db_session, response.id)
 
-        assert account_from_db is not None
-        assert account_from_db.balance == 0
+        assert account_from_db is not None, "Счёт не найден в БД"
+        assert account_from_db.balance == 0, (
+            f"Баланс счёта в БД: {account_from_db.balance}, ожидался 0"
+        )

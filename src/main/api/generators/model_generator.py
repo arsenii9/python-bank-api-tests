@@ -55,3 +55,7 @@ class RandomModelGenerator:
         elif isinstance(field_type, type):
             return RandomModelGenerator._generate_from_regex()
         return None
+
+    @staticmethod
+    def generate_amount(min_value: int, max_value: int) -> int:
+        return random.randint(min_value, max_value)

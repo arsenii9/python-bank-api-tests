@@ -1,7 +1,5 @@
 from http import HTTPStatus
-
 import requests
-
 from src.main.api.models.create_user_response import CreateUserResponse
 from src.main.api.requests.requester import Requester
 from src.main.api.models.create_user_request import CreateUserRequest
